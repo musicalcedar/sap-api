@@ -1,12 +1,7 @@
-import axios from "axios";
-import https from "https";
 import config from "../../config/config.js";
+import axiosInstance from "../../config/axiosInstance.js";
 
-const { URL, DATABASE, USER, PASSWORD } = config.SAP_B1;
-
-const agent = new https.Agent({
-  rejectUnauthorized: false,
-});
+const { DATABASE, USER, PASSWORD } = config.SAP_B1;
 
 const body = {
   CompanyDB: DATABASE,
@@ -14,16 +9,9 @@ const body = {
   Password: PASSWORD,
 };
 
-const axiosConfig = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-  httpsAgent: agent,
-};
-
 const loginToSap = async () => {
   try {
-    const res = await axios.post(`${URL}/Login`, body, axiosConfig);
+    const res = await axiosInstance.post("/Login", body);
 
     const sessionCookies = res.headers["set-cookie"];
 

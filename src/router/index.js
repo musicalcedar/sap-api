@@ -1,6 +1,6 @@
 import express from "express";
-import loginRouter from "./login.router.js";
-import businessPartnersRouter from "./businessPartnerts.js";
+import loginRouter from "./loginRouter.js";
+import businessPartnersRouter from "./businessPartnertRouter.js";
 
 const apiRouter = (server) => {
   const router = express.Router();
