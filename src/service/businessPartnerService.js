@@ -1,5 +1,5 @@
-import axiosInstance from "../../config/axiosInstance.js";
-import { getSessionCookies } from "../utils/sessionCookies.js";
+const axiosInstance = require("../../config/axiosInstance.js");
+const { getSessionCookies } = require("../utils/sessionCookies.js");
 
 const getBusinessPartners = async () => {
   try {
@@ -12,4 +12,4 @@ const getBusinessPartners = async () => {
   }
 };
 
-export default getBusinessPartners;
+module.exports = getBusinessPartners;

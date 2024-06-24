@@ -1,6 +1,6 @@
-import express from "express";
-import loginToSap from "../service/loginToSapService.js";
-import { setSessionCookies } from "../utils/sessionCookies.js";
+const express = require("express");
+const loginToSap = require("../service/loginToSapService.js");
+const { setSessionCookies } = require("../utils/sessionCookies.js");
 
 const loginRouter = express.Router();
 
@@ -40,4 +40,4 @@ loginRouter.post("/", async (req, res) => {
   }
 });
 
-export default loginRouter;
+module.exports = loginRouter;

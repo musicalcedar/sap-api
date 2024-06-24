@@ -1,7 +1,6 @@
-import axios from "axios";
-import https from "https";
-import config from "../config/config.js";
-import { getSessionCookies } from "../src/utils/sessionCookies.js";
+const axios = require("axios");
+const https = require("https");
+const config = require("./config");
 
 const { URL } = config.SAP_B1;
 
@@ -17,4 +16,4 @@ const axiosInstance = axios.create({
   httpsAgent: agent,
 });
 
-export default axiosInstance;
+module.exports = axiosInstance;

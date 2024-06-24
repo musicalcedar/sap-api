@@ -1,7 +1,9 @@
 let sessionCookies = [];
 
-export const setSessionCookies = (cookies) => {
+const setSessionCookies = (cookies) => {
   sessionCookies = cookies;
 };
 
-export const getSessionCookies = () => sessionCookies;
+const getSessionCookies = () => sessionCookies;
+
+module.exports = { setSessionCookies, getSessionCookies };

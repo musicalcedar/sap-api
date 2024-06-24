@@ -1,6 +1,6 @@
-import express from "express";
-import loginRouter from "./loginRouter.js";
-import businessPartnersRouter from "./businessPartnertRouter.js";
+const express = require("express");
+const loginRouter = require("./loginRouter");
+const businessPartnersRouter = require("./businessPartnertRouter");
 
 const apiRouter = (server) => {
   const router = express.Router();
@@ -10,4 +10,4 @@ const apiRouter = (server) => {
   router.use("/business-partners", businessPartnersRouter);
 };
 
-export default apiRouter;
+module.exports = apiRouter;

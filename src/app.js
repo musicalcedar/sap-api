@@ -1,6 +1,6 @@
-import express from "express";
-import apiRouter from "./router/index.js";
-import cookieParser from "cookie-parser";
+const express = require("express");
+const apiRouter = require("./router/index.js");
+const cookieParser = require("cookie-parser");
 
 const createServer = () => {
   const server = express();
@@ -12,4 +12,4 @@ const createServer = () => {
   return server;
 };
 
-export default createServer;
+module.exports = createServer;

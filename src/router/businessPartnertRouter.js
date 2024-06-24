@@ -1,5 +1,6 @@
-import express from "express";
-import getBusinessPartners from "../service/businessPartnerService.js";
+const express = require("express");
+const getBusinessPartners = require("../service/businessPartnerService");
+
 const businessPartnersRouter = express.Router();
 
 businessPartnersRouter.get("/", async (req, res) => {
@@ -12,4 +13,4 @@ businessPartnersRouter.get("/", async (req, res) => {
   }
 });
 
-export default businessPartnersRouter;
+module.exports = businessPartnersRouter;
