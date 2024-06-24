@@ -12,6 +12,7 @@ const {
   DB_PASSWORD,
   DB_NAME,
   DB_PORT,
+  ACCEPTED_ORIGINS,
 } = process.env;
 
 const config = {
@@ -30,6 +31,9 @@ const config = {
     DATABASE: SAP_COMPANY_DB,
     USER: SAP_USERNAME,
     PASSWORD: SAP_PASSWORD,
+  },
+  CORS: {
+    ACCEPTED_ORIGINS: ACCEPTED_ORIGINS.split(","),
   },
 };
 

@@ -2,13 +2,12 @@ const { DataTypes } = require("sequelize");
 const db = require("../index.js");
 const User = require("./userModel.js");
 
-
-
 const Token = db.define("Token", {
   id: {
-    type: DataTypes.UUIDV4,
+    type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
   },
   token: {
     type: DataTypes.STRING,

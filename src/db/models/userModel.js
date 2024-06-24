@@ -3,16 +3,17 @@ const db = require("../index");
 
 const User = db.define("User", {
   id: {
-    type: DataTypes.UUIDV4,
+    type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
   },
   username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   password: {
-    type: DataTypes.UUIDV4,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   email: {
