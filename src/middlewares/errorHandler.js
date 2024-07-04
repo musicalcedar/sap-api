@@ -1,13 +1,15 @@
 const { ValidationError } = require("sequelize");
+const { message } = require("../schemas/authSchema");
+const { TokenExpiredError } = require("jsonwebtoken");
 
 const errorLog = (err, req, res, next) => {
-  console.error(err);
+  console.error({ msg: err.message, stack: err.stack });
   next(err);
 };
 
 const errorHandler = (err, req, res, next) => {
   res.status(500).json({
-    stack: err.stack,
+    message: err.message,
   });
 };
 

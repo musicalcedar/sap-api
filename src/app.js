@@ -17,13 +17,13 @@ const createServer = () => {
   server.use(cors(options));
   server.use(express.json());
   server.use(cookieParser());
-
+  require("./utils/auth/index.js");
   apiRouter(server);
   server.use(errorLog);
   server.use(ormErrorHandler);
   server.use(boomErrorHandler);
-  server.use(errorHandler);
   server.use(tokenErrorHandler);
+  server.use(errorHandler);
   return server;
 };
 
