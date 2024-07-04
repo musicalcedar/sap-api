@@ -22,7 +22,6 @@ const getUserById = async (id) => {
 const getUserByEmail = async (email) => {
   const user = await User.findOne({
     where: { email },
-    attributes: { exclude: ["password"] },
   });
   if (!user) {
     throw boom.notFound("User not found");

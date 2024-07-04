@@ -13,6 +13,8 @@ const {
   DB_NAME,
   DB_PORT,
   ACCEPTED_ORIGINS,
+  JWT_SECRET,
+  JWT_REFRESH_SECRET,
 } = process.env;
 
 const config = {
@@ -34,6 +36,10 @@ const config = {
   },
   CORS: {
     ACCEPTED_ORIGINS: ACCEPTED_ORIGINS.split(","),
+  },
+  JWT: {
+    SECRET: JWT_SECRET,
+    REFRESH_SECRET: JWT_REFRESH_SECRET,
   },
 };
 
