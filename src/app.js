@@ -10,6 +10,7 @@ const {
   boomErrorHandler,
   tokenErrorHandler,
   errorHandler,
+  sapErrorHandler,
 } = require("./middlewares/errorHandler");
 
 const createServer = () => {
@@ -23,6 +24,7 @@ const createServer = () => {
   server.use(ormErrorHandler);
   server.use(boomErrorHandler);
   server.use(tokenErrorHandler);
+  server.use(sapErrorHandler);
   server.use(errorHandler);
   return server;
 };

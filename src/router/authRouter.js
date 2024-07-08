@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const loginToSap = require("../service/loginToSapService.js");
+const loginToSap = require("../service/SAP/loginToSapService.js");
 const { setSessionCookies } = require("../utils/sessionCookies.js");
 const validationHandler = require("../middlewares/validationHandler.js");
 const authSchema = require("../schemas/authSchema.js");

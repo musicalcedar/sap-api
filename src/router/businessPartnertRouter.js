@@ -1,5 +1,5 @@
 const express = require("express");
-const getBusinessPartners = require("../service/businessPartnerService");
+const getBusinessPartners = require("../service/SAP/businessPartnerService");
 
 const businessPartnersRouter = express.Router();
 

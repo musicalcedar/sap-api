@@ -1,5 +1,5 @@
-const config = require("../../config/config.js");
-const axiosInstance = require("../../config/axiosInstance.js");
+const config = require("../../../config/config.js");
+const axiosInstance = require("../../../config/axiosInstance.js");
 
 const { DATABASE, USER, PASSWORD } = config.SAP_B1;
 

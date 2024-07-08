@@ -43,10 +43,20 @@ const tokenErrorHandler = (err, req, res, next) => {
   }
 };
 
+const sapErrorHandler = (err, req, res, next) => {
+  if (err.response) {
+    const { message } = err.response.data.error;
+    res.status(400).json(message.value);
+  } else {
+    next(err);
+  }
+};
+
 module.exports = {
   errorLog,
   errorHandler,
   ormErrorHandler,
   tokenErrorHandler,
   boomErrorHandler,
+  sapErrorHandler,
 };

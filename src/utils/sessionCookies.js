@@ -6,4 +6,9 @@ const setSessionCookies = (cookies) => {
 
 const getSessionCookies = () => sessionCookies;
 
-module.exports = { setSessionCookies, getSessionCookies };
+const useSessionCookies = (axiosInstance) => {
+  const sessionCookies = getSessionCookies();
+  axiosInstance.defaults.headers.Cookie = sessionCookies.join(";");
+};
+
+module.exports = { setSessionCookies, getSessionCookies, useSessionCookies };
