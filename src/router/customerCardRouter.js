@@ -5,6 +5,7 @@ const {
   getCustomerCardById,
   updateCustomerCard,
   deleteCustomerCard,
+  getCustomerCardByCustomerId,
 } = require("../service/SAP/customerCardService");
 const validationHandler = require("../middlewares/validationHandler");
 const {
@@ -30,8 +31,16 @@ customerCardRouter.get(
   async (req, res, next) => {
     try {
       const { EquipmentCardNum } = req.params;
-      const customerCard = await getCustomerCardById(EquipmentCardNum);
-      res.status(200).json(customerCard);
+      if (!isNaN(Number(EquipmentCardNum.charAt(0)))) {
+        const customerCard = await getCustomerCardById(EquipmentCardNum);
+        res.status(200).json(customerCard);
+      } else {
+        console.log("CustomerCardNum: --> ", EquipmentCardNum);
+        const customerCard = await getCustomerCardByCustomerId(
+          EquipmentCardNum
+        );
+        res.status(200).json(customerCard);
+      }
     } catch (error) {
       next(error);
     }
