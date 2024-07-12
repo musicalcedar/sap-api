@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const ServiceCallID = Joi.string();
 const CustomerCode = Joi.string();
 const Subject = Joi.string();
 const Status = Joi.number();
@@ -28,9 +29,26 @@ const createServiceCallSchema = Joi.object({
   ProblemSubType: ProblemSubType.required(),
   CallType: CallType.required(),
   TechnicianCode: TechnicianCode.required(),
-  Resolution: Resolution.required(),
+  Resolution,
+});
+
+const updateServiceCallSchema = Joi.object({
+  Subject,
+  Status,
+  Priority,
+  ProblemType,
+  ProblemSubType,
+  CallType,
+  TechnicianCode,
+  Resolution,
+});
+
+const getServiceCallSchema = Joi.object({
+  ServiceCallID: ServiceCallID.required(),
 });
 
 module.exports = {
   createServiceCallSchema,
+  updateServiceCallSchema,
+  getServiceCallSchema,
 };

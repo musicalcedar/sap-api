@@ -1,9 +1,9 @@
 const axiosInstance = require("../../../config/axiosInstance");
-const { setSessionCookies } = require("../../utils/sessionCookies");
+const { useSessionCookies } = require("../../utils/sessionCookies");
 
 const getServiceCalls = async () => {
   try {
-    setSessionCookies(axiosInstance);
+    useSessionCookies(axiosInstance);
     const res = await axiosInstance.get("/ServiceCalls");
     return res.data.value;
   } catch (err) {
@@ -13,7 +13,7 @@ const getServiceCalls = async () => {
 
 const getServiceCallById = async (id) => {
   try {
-    setSessionCookies(axiosInstance);
+    useSessionCookies(axiosInstance);
     const res = await axiosInstance.get(`/ServiceCalls(${id})`);
     return res.data;
   } catch (err) {
@@ -23,7 +23,7 @@ const getServiceCallById = async (id) => {
 
 const createServiceCall = async (serviceCallData) => {
   try {
-    setSessionCookies(axiosInstance);
+    useSessionCookies(axiosInstance);
     const res = await axiosInstance.post("/ServiceCalls", serviceCallData);
     return res.data;
   } catch (err) {
@@ -33,7 +33,7 @@ const createServiceCall = async (serviceCallData) => {
 
 const updateServiceCall = async (id, serviceCallData) => {
   try {
-    setSessionCookies(axiosInstance);
+    useSessionCookies(axiosInstance);
     const res = await axiosInstance.patch(
       `/ServiceCalls(${id})`,
       serviceCallData
