@@ -22,7 +22,6 @@ const getCustomerCardById = async (id) => {
 };
 
 const getCustomerCardByCustomerId = async (customerId) => {
-  console.log({ customerId });
   try {
     useSessionCookies(axiosInstance);
     const res = await axiosInstance.get(

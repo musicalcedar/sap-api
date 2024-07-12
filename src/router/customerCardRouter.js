@@ -35,7 +35,6 @@ customerCardRouter.get(
         const customerCard = await getCustomerCardById(EquipmentCardNum);
         res.status(200).json(customerCard);
       } else {
-        console.log("CustomerCardNum: --> ", EquipmentCardNum);
         const customerCard = await getCustomerCardByCustomerId(
           EquipmentCardNum
         );
