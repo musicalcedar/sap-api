@@ -5,11 +5,11 @@ const { getUserByEmail } = require("../../../service/userService");
 
 const LocalStrategy = new Strategy(
   {
-    usernameField: "email",
+    usernameField: "username",
   },
-  async (email, password, done) => {
+  async (username, password, done) => {
     try {
-      const user = await getUserByEmail(email);
+      const user = await getUserByEmail(username);
       if (!user) {
         return done(boom.unauthorized(), false);
       }

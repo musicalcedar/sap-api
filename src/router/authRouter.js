@@ -23,7 +23,7 @@ loginRouter.post(
       const userPayload = {
         sub: userData.id,
         role: userData.role,
-        email: userData.email,
+        username: userData.username,
       };
 
       const accessToken = await generateAccessToken(userPayload);
@@ -32,16 +32,18 @@ loginRouter.post(
       await addToken(refreshToken, userData.id);
 
       const user = {
-        username: userData.email,
+        username: userData.username,
         role: userData.role,
       };
 
       res.cookie("token", accessToken, {
         httpOnly: true,
+        sameSite: "lax",
       });
 
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
+        sameSite: "lax",
       });
       const sessionCookies = await loginToSap();
       if (!sessionCookies) {
@@ -65,6 +67,7 @@ loginRouter.get("/logout", (req, res) => {
 loginRouter.get("/refresh-token", async (req, res, next) => {
   const { redirect } = req.query;
   const refreshToken = req.cookies.refreshToken;
+  console.log({ refreshToken });
   try {
     if (!refreshToken) {
       throw new Error("No token provided");
