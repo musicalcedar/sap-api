@@ -45,13 +45,14 @@ loginRouter.post(
         httpOnly: true,
         sameSite: "lax",
       });
+
       const sessionCookies = await loginToSap();
       if (!sessionCookies) {
         throw new Error("Error logging in to SAP");
       }
       setSessionCookies(sessionCookies);
 
-      res.status(200).json({ message: "login ok" });
+      res.status(200).json({ user });
     } catch (error) {
       next(error);
     }
@@ -67,7 +68,6 @@ loginRouter.get("/logout", (req, res) => {
 loginRouter.get("/refresh-token", async (req, res, next) => {
   const { redirect } = req.query;
   const refreshToken = req.cookies.refreshToken;
-  console.log({ refreshToken });
   try {
     if (!refreshToken) {
       throw new Error("No token provided");
