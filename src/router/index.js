@@ -16,6 +16,7 @@ const apiRouter = (server) => {
   server.use("/api/v1", router);
   router.use("/auth", authRouter);
   router.use("/user", userRouter);
+
   router.use(authHandler);
   router.use("/items", itemsRouter);
   router.use("/business-partners", businessPartnersRouter);

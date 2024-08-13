@@ -25,7 +25,7 @@ const getCustomerCardByCustomerId = async (customerId) => {
   try {
     useSessionCookies(axiosInstance);
     const res = await axiosInstance.get(
-      `/CustomerEquipmentCards?$select=EquipmentCardNum,CustomerCode,CustomerName,ManufacturerSerialNum,InternalSerialNum,ItemCode,ItemDescription&$filter=CustomerCode eq '${customerId}'`
+      `/CustomerEquipmentCards?$select=EquipmentCardNum,CustomerCode,CustomerName,ManufacturerSerialNum,InternalSerialNum,ItemCode,ItemDescription,StatusOfSerialNumber&$filter=CustomerCode eq '${customerId}'`
     );
     return res.data;
   } catch (err) {
