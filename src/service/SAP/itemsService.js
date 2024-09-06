@@ -31,19 +31,24 @@ const getItemById = async (ItemCode) => {
     const res = await axiosInstance.get(
       `/Items('${ItemCode}')?$select=ItemName,ItemCode&$orderby=ItemCode`
     );
-    return res.data;
+    const { ItemCode: ref, ItemName: description } = res.data;
+    return [{ ref, description }];
   } catch (err) {
     throw err;
   }
 };
 
-const getItemByName = async ({ ItemName, limit, skip }) => {
+const getItemByName = async ({ searchTerm, limit, skip }) => {
   try {
     useSessionCookies(axiosInstance);
     const res = await axiosInstance.get(
-      `/Items?$filter=contains(ItemName, '${ItemName}')&$select=ItemCode,ItemName&$orderby=ItemCode&$top=${limit}&$skip=${skip}`
+      `/Items?$filter=contains(ItemName, '${searchTerm}')&$select=ItemCode,ItemName&$orderby=ItemCode&$top=${limit}&$skip=${skip}`
     );
-    return res.data;
+    const { value } = res.data;
+    return value.map(({ ItemCode: ref, ItemName: description }) => ({
+      ref,
+      description,
+    }));
   } catch (err) {
     throw err;
   }
