@@ -11,4 +11,14 @@ const getBusinessPartners = async () => {
   }
 };
 
-module.exports = getBusinessPartners;
+const getBusinessPartnerById = async (id) => {
+  try {
+    useSessionCookies(axiosInstance);
+    const response = await axiosInstance.get(`/BusinessPartners('${id}')`);
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { getBusinessPartners, getBusinessPartnerById };
