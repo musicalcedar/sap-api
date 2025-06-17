@@ -14,6 +14,10 @@ const apiRouter = (server) => {
   const router = express.Router();
 
   server.use("/api/v1", router);
+  router.use("/", (req, res, next) => {
+    console.log(req.method, req.url);
+    next();
+  });
   router.use("/auth", authRouter);
   router.use("/user", userRouter);
 

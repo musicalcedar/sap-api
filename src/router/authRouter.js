@@ -91,10 +91,15 @@ loginRouter.get("/refresh-token", async (req, res, next) => {
       httpOnly: true,
     });
 
+    const sessionCookies = await loginToSap();
+    if (!sessionCookies) {
+      throw new Error("Error logging in to SAP");
+    }
+    setSessionCookies(sessionCookies);
+
     if (redirect) {
       return res.redirect(decodeURIComponent(redirect));
     }
-
     res.status(200).json({ message: "Token refreshed" });
   } catch (err) {
     next(err);

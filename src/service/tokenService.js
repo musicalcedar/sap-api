@@ -33,4 +33,6 @@ const deleteToken = async (userId) => {
 module.exports = {
   addToken,
   getToken,
+  getTokenByUserId,
+  deleteToken,
 };

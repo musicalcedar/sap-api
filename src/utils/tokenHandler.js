@@ -5,7 +5,7 @@ const { SECRET, REFRESH_SECRET } = config.JWT;
 
 const sign = (payload, isAccesToken) => {
   return jwt.sign(payload, isAccesToken ? SECRET : REFRESH_SECRET, {
-    expiresIn: isAccesToken ? "30m" : "1h",
+    expiresIn: isAccesToken ? "1h" : "8h",
   });
 };
 
