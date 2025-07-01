@@ -6,7 +6,8 @@ export const authController = {
     try {
       const user = req.user;
       if (!user) {
-        return res.status(401).json({ error: 'Usuario no autenticado' });
+        res.status(401).json({ error: 'Usuario no autenticado' });
+        return;
       }
       const tokens = await joseTokenService.generateTokenPair({
         sub: user.id,

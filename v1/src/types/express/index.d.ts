@@ -1,8 +1,9 @@
-import { User } from '../../domain/entities/user';
+import type { User as DomainUser } from '../../domain/entities/user';
 
 declare global {
   namespace Express {
-    interface User extends Omit<User, 'password'> {}
+    // Incluye todos los campos de User, sin omitir password
+    interface User extends DomainUser {}
     interface Request {
       user?: User;
     }
