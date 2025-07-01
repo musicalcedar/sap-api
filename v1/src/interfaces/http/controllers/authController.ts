@@ -1,14 +1,20 @@
 import { Request, Response } from 'express';
-import { login } from '../../../application/use-cases/auth/login';
-import { prismaUserRepository } from '../../../infrastructure/prisma/prismaUserRepository';
 import { joseTokenService } from '../../../infrastructure/auth/joseTokenService';
 
 export const authController = {
   async login(req: Request, res: Response) {
     try {
-      const { username, password } = req.body;
-      const result = await login({ username, password }, prismaUserRepository, joseTokenService);
-      res.json(result);
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'Usuario no autenticado' });
+      }
+      const tokens = await joseTokenService.generateTokenPair({
+        sub: user.id,
+        username: user.username,
+        role: user.role,
+      });
+      const { password, ...userWithoutPassword } = user;
+      res.json({ user: userWithoutPassword, tokens });
     } catch (error) {
       res.status(401).json({ error: 'Credenciales inválidas' });
     }
