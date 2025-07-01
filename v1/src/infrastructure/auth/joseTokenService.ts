@@ -1,10 +1,13 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { TokenService } from '../../domain/services/TokenService';
 import { TokenPayload, TokenPair } from '../../domain/entities/token';
+import { config } from '../../config';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
-const REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN || '7d';
+const JWT_SECRET = config.JWT_SECRET;
+const JWT_EXPIRES_IN = config.JWT_EXPIRES_IN;
+const REFRESH_TOKEN_EXPIRES_IN = config.JWT_REFRESH_EXPIRES_IN;
+
+console.log('jwt en jose', JWT_SECRET);
 
 const encoder = new TextEncoder();
 

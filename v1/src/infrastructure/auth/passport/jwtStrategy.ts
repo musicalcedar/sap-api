@@ -1,7 +1,9 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { prismaUserRepository } from '../../prisma/prismaUserRepository';
+import { config } from '../../../config';
 
-const jwtSecret = process.env.JWT_SECRET || 'secret';
+const jwtSecret = config.JWT_SECRET;
+console.log('jwtSecret en jwtStrategy', jwtSecret);
 
 export const jwtStrategy = new JwtStrategy(
   {
