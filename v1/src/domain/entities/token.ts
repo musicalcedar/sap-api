@@ -1,9 +1,9 @@
 export type TokenPayload = {
-  sub: string;          // user id
-  username: string;     // username
-  role: string;         // user role
-  iat?: number;         // issued at
-  exp?: number;         // expiration time
+  sub: string;
+  username: string;
+  role: string;
+  iat?: number;
+  exp?: number;
 };
 
 export type TokenPair = {

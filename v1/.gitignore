@@ -30,4 +30,5 @@ coverage/
 .DS_Store
 .cache/
 
-http/
+*.http
+/src/generated/prisma
