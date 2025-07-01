@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { joseTokenService } from '../../../infrastructure/auth/joseTokenService';
+import { login as loginUseCase } from '../../../application/use-cases/auth/login';
 
 export const authController = {
   async login(req: Request, res: Response) {
@@ -9,13 +10,10 @@ export const authController = {
         res.status(401).json({ error: 'Usuario no autenticado' });
         return;
       }
-      const tokens = await joseTokenService.generateTokenPair({
-        sub: user.id,
-        username: user.username,
-        role: user.role,
-      });
-      const { password, ...userWithoutPassword } = user;
-      res.json({ user: userWithoutPassword, tokens });
+
+      const result = await loginUseCase(user, joseTokenService);
+
+      res.json(result);
     } catch (error) {
       res.status(401).json({ error: 'Credenciales inválidas' });
     }
