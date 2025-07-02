@@ -5,6 +5,7 @@ import { authController } from '../controllers/authController';
 const router = Router();
 
 router.post('/login', passport.authenticate('local', { session: false }), authController.login);
+router.post('/refresh', authController.refreshToken);
 
 // Ruta protegida con JWT
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
