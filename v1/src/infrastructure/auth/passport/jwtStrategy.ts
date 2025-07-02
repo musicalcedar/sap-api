@@ -3,7 +3,6 @@ import { prismaUserRepository } from '../../prisma/prismaUserRepository';
 import { config } from '../../../config';
 
 const jwtSecret = config.JWT_SECRET;
-console.log('jwtSecret en jwtStrategy', jwtSecret);
 
 export const jwtStrategy = new JwtStrategy(
   {

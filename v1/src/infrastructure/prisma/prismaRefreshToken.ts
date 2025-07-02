@@ -1,8 +1,16 @@
 import { prisma } from './prismaClient';
 
 export const prismaRefreshTokenRepository = {
-  async create({ token, userId, expiresAt }: { token: string; userId: string; expiresAt: Date }) {
-    return prisma.refreshToken.create({
+  async create({
+    token,
+    userId,
+    expiresAt,
+  }: {
+    token: string;
+    userId: string;
+    expiresAt: Date;
+  }): Promise<void> {
+    await prisma.refreshToken.create({
       data: { token, userId, expiresAt },
     });
   },
@@ -12,7 +20,7 @@ export const prismaRefreshTokenRepository = {
     });
   },
   async revoke(token: string) {
-    return prisma.refreshToken.updateMany({
+    await prisma.refreshToken.updateMany({
       where: { token },
       data: { revoked: true },
     });

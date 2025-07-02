@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { joseTokenService } from '../../../infrastructure/auth/joseTokenService';
 import { login as loginUseCase } from '../../../application/use-cases/auth/login';
+import { prismaRefreshTokenRepository } from '../../../infrastructure/prisma/prismaRefreshToken';
 
 export const authController = {
   async login(req: Request, res: Response) {
@@ -11,7 +12,7 @@ export const authController = {
         return;
       }
 
-      const result = await loginUseCase(user, joseTokenService);
+      const result = await loginUseCase(user, joseTokenService, prismaRefreshTokenRepository);
 
       res.json(result);
     } catch (error) {
