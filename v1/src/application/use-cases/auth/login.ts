@@ -4,6 +4,7 @@ import { User } from '../../../domain/entities/user';
 import { RefreshTokenRepository } from '../../../domain/repositories/RefreshTokenRepository';
 import { config } from '../../../config';
 import { getExpirationSeconds } from '../../../utils/getExpirationSeconds';
+import Boom from '@hapi/boom';
 
 type LoginResponse = {
   user: Omit<User, 'password'>;
@@ -20,6 +21,8 @@ export const login = async (
     username: user.username,
     role: user.role,
   });
+
+  if (!tokens) Boom.badImplementation('Error al generar tokens');
 
   await refreshTokenRepository.create({
     token: tokens.refreshToken,

@@ -27,6 +27,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
+    "@types/hapi__boom": "^7.4.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.3",
     "@typescript-eslint/eslint-plugin": "^8.34.1",
@@ -39,6 +40,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@hapi/boom": "^10.0.1",
     "@prisma/client": "^6.10.0",
     "@types/express": "^5.0.3",
     "@types/passport": "^1.0.17",
