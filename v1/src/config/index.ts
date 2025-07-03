@@ -19,6 +19,4 @@ export const config = {
   JWT_REFRESH_EXPIRES_IN: requireEnv('JWT_REFRESH_EXPIRES_IN'),
 
   REDIS_URL: requireEnv('REDIS_URL'),
-  REDIS_PASSWORD: requireEnv('REDIS_PASSWORD'),
-  REDIS_PREFIX: requireEnv('REDIS_PREFIX'),
 };

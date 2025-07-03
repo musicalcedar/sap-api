@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { joseTokenService } from '../../../infrastructure/auth/joseTokenService';
 import { login as loginUseCase } from '../../../application/use-cases/auth/login';
 import { refreshToken as refreshTokenUseCase } from '../../../application/use-cases/auth/refreshToken';
 import { prismaRefreshTokenRepository } from '../../../infrastructure/prisma/prismaRefreshToken';
 import { prismaUserRepository } from '../../../infrastructure/prisma/prismaUserRepository';
+import Boom from '@hapi/boom';
 
 export const authController = {
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const user = req.user as import('../../../domain/entities/user').User;
       if (!user) {
-        res.status(401).json({ error: 'Usuario no autenticado' });
+        next(Boom.unauthorized('Usuario no autenticado'));
         return;
       }
 
@@ -18,15 +19,15 @@ export const authController = {
 
       res.json(result);
     } catch (error) {
-      res.status(401).json({ error: 'Credenciales inválidas' });
+      next(error);
     }
   },
 
-  async refreshToken(req: Request, res: Response) {
+  async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
       const refreshToken = req.body.refreshToken;
       if (!refreshToken) {
-        res.status(401).json({ error: 'Token de refresco no proporcionado' });
+        next(Boom.unauthorized('Token de refresco no proporcionado'));
         return;
       }
 
@@ -39,7 +40,7 @@ export const authController = {
 
       res.json(result);
     } catch (error) {
-      res.status(401).json({ error: 'Token de refresco inválido' });
+      next(error);
     }
   },
 };

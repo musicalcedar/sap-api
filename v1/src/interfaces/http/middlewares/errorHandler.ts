@@ -35,11 +35,9 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     stack: err.stack,
     path: req.path,
     method: req.method,
-    body: req.body,
-    user: req.user,
   });
 
   res.status(err.status || 500).json({
-    error: err.message || 'Error interno del servidor',
+    error: 'Error interno del servidor',
   });
 };
