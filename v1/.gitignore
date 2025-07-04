@@ -32,3 +32,5 @@ coverage/
 
 *.http
 /src/generated/prisma
+
+/sap-frontend/node_modules/

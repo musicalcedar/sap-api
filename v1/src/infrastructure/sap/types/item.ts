@@ -11,4 +11,8 @@ export interface SapItem {
     WarehouseCode: string;
     InStock: number;
   }>;
+  Manufacturer2?: {
+    Code: number;
+    ManufacturerName: string;
+  };
 }

@@ -33,13 +33,16 @@ export const sapController = {
       const session = req.cookies.session;
       const cookies = `B1SESSION=${session.B1SESSION}; ROUTEID=${session.ROUTEID}`;
 
-      let odataQuery = req.url.split('?')[1] || '';
-      if (!/\$select=/i.test(odataQuery)) {
-        odataQuery +=
-          (odataQuery ? '&' : '') +
-          '$select=ItemCode,ItemName,Manufacturer,ItemPrices,ItemWarehouseInfoCollection';
-      }
-      const url = odataQuery ? `/Items?${odataQuery}` : '/Items';
+      const top = Number(req.query.top) || 20;
+      const skip = Number(req.query.skip) || 0;
+
+      let odataQuery =
+        '$select=ItemCode,ItemName,Manufacturer,ItemPrices,ItemWarehouseInfoCollection,Manufacturer2' +
+        '&$expand=Manufacturer2' +
+        `&$top=${top}` +
+        `&$skip=${skip}`;
+
+      const url = `/Items?${odataQuery}`;
 
       const response = await axiosSapInstance.get(url, {
         headers: { Cookie: cookies },
