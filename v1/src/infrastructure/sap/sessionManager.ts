@@ -1,7 +1,7 @@
 import Redis from 'ioredis';
 import { config } from '../../config';
 import { SapSession } from '../../domain/entities/sapSession';
-import { loginSapSession } from '@/application/use-cases/sap/loginSapSession';
+import { loginSapSession } from '../../application/use-cases/sap/loginSapSession';
 import { sapAuthService } from './sapAuthService';
 
 const redis = new Redis(config.REDIS_URL);
