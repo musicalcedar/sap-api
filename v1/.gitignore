@@ -34,3 +34,6 @@ coverage/
 /src/generated/prisma
 
 /sap-frontend/node_modules/
+
+ARCHITECTURE.md
+CLEAN_ARCHITECTURE_PATTERNS.md
