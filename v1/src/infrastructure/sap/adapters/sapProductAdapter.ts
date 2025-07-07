@@ -1,10 +1,8 @@
-import { axiosSapInstance } from './axiosSapInstance';
-import { SapItem } from './types/item';
-import { SapSession } from '../../domain/entities/sapSession';
-
+import { axiosSapInstance } from '../axiosSapInstance';
+import { SapItem } from '../types/item';
+import { SapSession } from '../../../domain/entities/sapSession';
 
 export const sapProductAdapter = {
-
   async getItems(session: SapSession, top: number = 20, skip: number = 0) {
     const cookies = `B1SESSION=${session.B1SESSION}; ROUTEID=${session.ROUTEID}`;
 

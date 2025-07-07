@@ -1,5 +1,5 @@
 import { SapItem } from '../types/item';
-import { ItemDto } from '../../../interfaces/http/dto/itemDto';
+import { ItemDto } from '../../../interfaces/http/dto/sapItemDto';
 
 export function mapSapItemToDto(item: SapItem): ItemDto {
   return {
