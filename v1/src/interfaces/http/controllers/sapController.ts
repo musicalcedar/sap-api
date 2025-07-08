@@ -37,25 +37,13 @@ export const sapController = {
       const top = Number(req.query.top) || 20;
       const skip = Number(req.query.skip) || 0;
       const filter = req.query.filter as string | undefined;
-      const type = req.query.type as string | undefined;
 
-      let businessPartners;
-
-      if (type) {
-        businessPartners = await sapBusinessPartnerAdapter.getBusinessPartnersByType(
-          session,
-          type,
-          top,
-          skip
-        );
-      } else {
-        businessPartners = await sapBusinessPartnerAdapter.getBusinessPartner(
-          session,
-          top,
-          skip,
-          filter
-        );
-      }
+      const businessPartners = await sapBusinessPartnerAdapter.getBusinessPartner(
+        session,
+        top,
+        skip,
+        filter
+      );
 
       const mappedBusinessPartners = businessPartners.map(mapSapBusinessPartnerToDto);
 

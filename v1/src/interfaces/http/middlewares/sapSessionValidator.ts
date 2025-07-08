@@ -4,7 +4,6 @@ import { getSessionValidator } from '../../../composition';
 
 export const sapSessionValidator = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log('Validando sesión SAP');
     const validateSession = getSessionValidator();
     const session = await validateSession();
     if (!session) {
