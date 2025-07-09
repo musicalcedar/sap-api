@@ -7,10 +7,7 @@ import {
   composeCreateBusinessPartnerUseCase,
 } from '../../../composition';
 import { mapItemToDto } from '../dto/SapItemResponseDto';
-import {
-  mapBusinessPartnersToDtos,
-  mapBusinessPartnerToDto,
-} from '../dto/SapBusinessPartnerResponseDto';
+import { mapBusinessPartnerToDto } from '../dto/SapBusinessPartnerResponseDto';
 
 export const sapController = {
   async loginSapSession(req: Request, res: Response, next: NextFunction) {

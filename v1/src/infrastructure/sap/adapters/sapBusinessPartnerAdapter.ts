@@ -1,55 +1,7 @@
 import { SapSession } from '../../../domain/entities/sapSession';
 import { axiosSapInstance } from '../axiosSapInstance';
 import { SapBusinessPartner } from '../../../domain/entities/sapBusinessPartner';
-
-interface SapBusinessPartnerRaw {
-  CardCode: string;
-  CardName: string;
-  CardType: string;
-  GroupCode: number;
-  Address?: string;
-  MailAddress?: string;
-  Phone1?: string;
-  Cellular?: string;
-  EmailAddress?: string;
-  FederalTaxID?: string;
-  VatLiable?: string;
-  City?: string;
-  Country?: string;
-  Block?: string;
-  Currency?: string;
-  CurrentAccountBalance?: number;
-  OpenDeliveryNotesBalance?: number;
-  OpenOrdersBalance?: number;
-  CreateDate?: string;
-  CreateTime?: string;
-  UpdateDate?: string;
-  UpdateTime?: string;
-  BPAddresses?: Array<{
-    AddressName: string;
-    Street: string;
-    Block?: string;
-    City: string;
-    Country: string;
-    AddressType: string;
-    BPCode: string;
-    RowNum: number;
-    CreateDate: string;
-    CreateTime: string;
-  }>;
-  ContactEmployees?: Array<{
-    Name?: string;
-    Position?: string;
-    Address?: string;
-    Phone1?: string;
-    MobilePhone?: string;
-    E_Mail?: string;
-    Active?: string;
-    InternalCode?: number;
-    FirstName?: string;
-    LastName?: string;
-  }>;
-}
+import { SapBusinessPartnerRaw } from '../types/sapBusinessPartnerRaw';
 
 const mapToSapBusinessPartner = (raw: SapBusinessPartnerRaw): SapBusinessPartner => {
   return {

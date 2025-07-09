@@ -4,9 +4,7 @@ export interface AddressDto {
   addressType: string;
   street: string;
   city: string;
-  state?: string;
   country: string;
-  zipCode?: string;
   isDefault: boolean;
 }
 
@@ -29,7 +27,6 @@ export interface SapBusinessPartnerResponseDto {
   phone?: string;
   mobile?: string;
   email?: string;
-  website?: string;
   currency?: string;
   balance?: number;
   openDeliveryBalance?: number;
@@ -60,7 +57,6 @@ export const mapBusinessPartnerToDto = (
     phone: partner.phone,
     mobile: partner.mobile,
     email: partner.email,
-    website: undefined, // No existe en la nueva estructura
     currency: partner.currency,
     balance: partner.currentBalance,
     openDeliveryBalance: partner.openDeliveryBalance,
@@ -70,9 +66,7 @@ export const mapBusinessPartnerToDto = (
         addressType: address.type,
         street: address.street || '',
         city: address.city || '',
-        state: undefined, // No existe en la nueva estructura
         country: address.country || '',
-        zipCode: undefined, // No existe en la nueva estructura
         isDefault: address.type === 'bo_BillTo',
       })) || [],
     contactEmployees:
@@ -87,10 +81,4 @@ export const mapBusinessPartnerToDto = (
     createdAt,
     updatedAt,
   };
-};
-
-export const mapBusinessPartnersToDtos = (
-  partners: SapBusinessPartner[]
-): SapBusinessPartnerResponseDto[] => {
-  return partners.map(mapBusinessPartnerToDto);
 };

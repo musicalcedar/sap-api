@@ -1,31 +1,8 @@
 import { axiosSapInstance } from '../axiosSapInstance';
 import { SapItem } from '../../../domain/entities/sapItem';
 import { SapSession } from '../../../domain/entities/sapSession';
+import { SapItemRaw } from '../types/sapItemRaw';
 
-// Tipo interno para representar la estructura de datos que viene directamente de SAP
-interface SapItemRaw {
-  ItemCode: string;
-  ItemName: string;
-  Manufacturer: number | null;
-  Manufacturer2?: {
-    Code: number;
-    ManufacturerName: string;
-  };
-  ItemPrices: Array<{
-    PriceList: number;
-    Price: number;
-    Currency: string | null;
-  }>;
-  ItemWarehouseInfoCollection: Array<{
-    WarehouseCode: string;
-    InStock: number;
-    Committed?: number;
-    Ordered?: number;
-    Available?: number;
-  }>;
-}
-
-// Función para mapear los datos crudos de SAP a nuestra entidad de dominio
 const mapToSapItem = (raw: SapItemRaw): SapItem => {
   return {
     code: raw.ItemCode,
@@ -49,7 +26,6 @@ const mapToSapItem = (raw: SapItemRaw): SapItem => {
         quantity: warehouse.InStock,
         committed: warehouse.Committed,
         ordered: warehouse.Ordered,
-        available: warehouse.Available,
       })) || [],
   };
 };
