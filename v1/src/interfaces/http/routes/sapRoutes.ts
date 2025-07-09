@@ -9,5 +9,6 @@ router.get('/items', sapSessionValidator, sapController.getItems);
 
 router.get('/business-partner/:code', sapSessionValidator, sapController.getBusinessPartnerByCode);
 router.get('/business-partner', sapSessionValidator, sapController.getBussinessPartner);
+router.post('/business-partner', sapSessionValidator, sapController.createBusinessPartner);
 
 export default router;
