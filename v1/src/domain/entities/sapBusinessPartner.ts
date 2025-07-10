@@ -1,101 +1,55 @@
 export interface SapBusinessPartner {
-  // Datos básicos (esenciales para identificación)
-  code: string;
+  code: string; // Se repite en el array de BPAddresses en los campos BPCode
   name: string;
-  type: string;
   groupCode: number;
+  address: string; // se repite en MailAddress U_BPCO_Address y en el array de BPAddresses en los campos Street
+  phone: string; // se repite en Cellular y U_Celular
+  federalTaxId: string; // se repite en U_Info_RUT
+  city: string; // se repite en MailCity enn el array de BPAddresses en los campos City y U_BPCO_City
+  email: string; // se repite en U_addInFaElectronica_email_contacto_FE
 
-  // Datos de contacto (importantes para comunicación)
-  phone?: string;
-  mobile?: string;
-  email?: string;
-  contactPerson?: string;
+  // Campos personalizados para Colombia
+  U_EsAutorret: string | null;
+  U_BPCO_RTC: string | null;
+  U_BPCO_TDC: string | null;
+  U_BPCO_CS: string | null;
+  U_BPCO_City: string | null;
+  U_BPCO_TP: string | null;
+  U_BPCO_Nombre: string | null;
+  U_BPCO_1Apellido: string | null;
+  U_BPCO_2Apellido: string | null;
+  U_BPCO_Address: string | null;
+  U_Info_RUT: string | null;
+  U_addInFaElectronica_email_contacto_FE: string | null;
+  U_Celular: string | null;
 
-  // Datos de dirección (importantes para envíos y facturación)
-  address?: string;
-  mailAddress?: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  zipCode?: string;
-  block?: string;
-
-  // Datos fiscales (importantes para facturación)
-  federalTaxId?: string;
-  vatLiable?: string;
-
-  // Datos financieros (importantes para crédito y precios)
-  currency?: string;
-  creditLimit?: number;
-  maxCommitment?: number;
-  discountPercent?: number;
-  priceList?: number;
-  paymentTerms?: number;
-
-  // Saldos (importantes para consultas financieras)
-  currentBalance?: number;
-  openDeliveryBalance?: number;
-  openOrdersBalance?: number;
-  openChecksBalance?: number;
-
-  // Configuración de ventas (importantes para órdenes y cotizaciones)
-  salesPersonCode?: number;
-  backOrder?: boolean;
-  partialDelivery?: boolean;
-
-  // Estados (importantes para validación)
-  isActive?: boolean;
-  isFrozen?: boolean;
-
-  // Campos personalizados para Colombia (importantes para localización)
-  U_Ciudad_CC?: string;
-  U_Departamento_CC?: string;
-  U_BPCO_RTC?: string; // Régimen tributario
-  U_BPCO_TP?: string; // Tipo de contribuyente
-  U_OK1_AC_ECO?: string; // Actividad económica
-
-  // Fechas (importantes para auditoría)
-  createdAt?: {
-    date?: string;
-    time?: string;
-  };
-  updatedAt?: {
-    date?: string;
-    time?: string;
-  };
-
-  // Direcciones detalladas (importantes para envíos y facturación)
-  addresses?: Array<{
-    name: string;
-    street: string;
-    block?: string;
-    city: string;
-    state?: string;
-    country: string;
-    zipCode?: string;
-    type: string;
-    businessPartnerCode: string;
-    rowNumber: number;
-    buildingFloorRoom?: string;
-    U_Municipio?: string;
-    U_CodDepartamento?: string;
-    createdAt: {
-      date: string;
-      time: string;
-    };
-  }>;
-
-  // Contactos (importantes para comunicación)
-  contacts?: Array<{
-    name?: string;
-    firstName?: string;
-    lastName?: string;
-    position?: string;
-    address?: string;
-    phone?: string;
-    mobile?: string;
-    email?: string;
-    isActive?: boolean;
-    internalCode?: number;
+  Addresses: Array<{
+    AddressName: string | null;
+    Street: string | null;
+    Block: string | null;
+    ZipCode: string | null;
+    City: string | null;
+    County: string | null;
+    Country: string | null;
+    State: string | null;
+    FederalTaxID: string | null;
+    TaxCode: string | null;
+    BuildingFloorRoom: string | null;
+    AddressType: string | null;
+    AddressName2: string | null;
+    AddressName3: string | null;
+    TypeOfAddress: string | null;
+    BPCode: string;
+    GlobalLocationNumber: string | null;
+    Nationality: string | null;
+    TaxOffice: string | null;
+    GSTIN: string | null;
+    GstType: string | null;
+    CreateDate: string | null;
+    CreateTime: string | null;
+    MYFType: string | null;
+    TaasEnabled: string | null;
+    U_Municipio: string | null;
+    U_CodDepartamento: string | null;
   }>;
 }
