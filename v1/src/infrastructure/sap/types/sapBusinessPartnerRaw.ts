@@ -1,4 +1,4 @@
-export interface Welcome {
+export interface SapBusinessPartnerResponse {
   'odata.metadata': string;
   value: SapBusinessPartnerRaw[];
   'odata.nextLink': string;
