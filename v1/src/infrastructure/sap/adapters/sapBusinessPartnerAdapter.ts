@@ -1,109 +1,171 @@
 import { SapSession } from '../../../domain/entities/sapSession';
 import { axiosSapInstance } from '../axiosSapInstance';
 import { SapBusinessPartner } from '../../../domain/entities/sapBusinessPartner';
-import { SapBusinessPartnerRaw } from '../types/sapBusinessPartnerRaw';
+import {
+  SapBusinessPartnerRaw,
+  AcceptsEndorsedChecks,
+  CardType,
+  Country,
+  Currency,
+  VatLiable,
+  UBpcoRTC,
+  UPaisCC,
+} from '../types/sapBusinessPartnerRaw';
 
 const mapToSapBusinessPartner = (raw: SapBusinessPartnerRaw): SapBusinessPartner => {
   return {
+    // Datos básicos
     code: raw.CardCode,
     name: raw.CardName,
     type: raw.CardType,
     groupCode: raw.GroupCode,
-    address: raw.Address,
-    mailAddress: raw.MailAddress,
-    phone: raw.Phone1,
-    mobile: raw.Cellular,
-    email: raw.EmailAddress,
-    federalTaxId: raw.FederalTaxID,
-    vatLiable: raw.VatLiable,
-    city: raw.City,
-    country: raw.Country,
-    block: raw.Block,
-    currency: raw.Currency,
+
+    // Datos de contacto
+    phone: raw.Phone1 || undefined,
+    mobile: raw.Cellular || undefined,
+    email: raw.EmailAddress || undefined,
+    contactPerson: raw.ContactPerson || undefined,
+
+    // Datos de dirección
+    address: raw.Address || undefined,
+    mailAddress: raw.MailAddress || undefined,
+    city: raw.City || undefined,
+    state: raw.BillToState || undefined,
+    country: raw.Country || undefined,
+    zipCode: raw.ZipCode || undefined,
+    block: raw.Block || undefined,
+
+    // Datos fiscales
+    federalTaxId: raw.FederalTaxID || undefined,
+    vatLiable: raw.VatLiable || undefined,
+
+    // Datos financieros
+    currency: raw.Currency || undefined,
+    creditLimit: raw.CreditLimit,
+    maxCommitment: raw.MaxCommitment,
+    discountPercent: raw.DiscountPercent,
+    priceList: raw.PriceListNum,
+    paymentTerms: raw.PayTermsGrpCode,
+
+    // Saldos
     currentBalance: raw.CurrentAccountBalance,
     openDeliveryBalance: raw.OpenDeliveryNotesBalance,
     openOrdersBalance: raw.OpenOrdersBalance,
+    openChecksBalance: raw.OpenChecksBalance,
+
+    // Configuración de ventas
+    salesPersonCode: raw.SalesPersonCode,
+    backOrder: raw.BackOrder === 'tYES',
+    partialDelivery: raw.PartialDelivery === 'tYES',
+
+    // Estados
+    isActive: raw.Valid === 'tYES',
+    isFrozen: raw.Frozen === 'tYES',
+
+    // Campos personalizados para Colombia
+    U_Ciudad_CC: raw.U_Ciudad_CC || undefined,
+    U_Departamento_CC: raw.U_Departamento_CC || undefined,
+    U_BPCO_RTC: raw.U_BPCO_RTC || undefined,
+    U_BPCO_TP: raw.U_BPCO_TP || undefined,
+    U_OK1_AC_ECO: raw.U_OK1_AC_ECO || undefined,
+
+    // Fechas
     createdAt:
       raw.CreateDate && raw.CreateTime
         ? {
-            date: raw.CreateDate,
+            date: raw.CreateDate.toString(),
             time: raw.CreateTime,
           }
         : undefined,
     updatedAt:
       raw.UpdateDate && raw.UpdateTime
         ? {
-            date: raw.UpdateDate,
+            date: raw.UpdateDate.toString(),
             time: raw.UpdateTime,
           }
         : undefined,
-    addresses: raw.BPAddresses?.map(address => ({
-      name: address.AddressName,
-      street: address.Street,
-      block: address.Block,
-      city: address.City,
-      country: address.Country,
-      type: address.AddressType,
-      businessPartnerCode: address.BPCode,
-      rowNumber: address.RowNum,
-      createdAt: {
-        date: address.CreateDate,
-        time: address.CreateTime,
-      },
-    })),
-    contacts: raw.ContactEmployees?.map(contact => ({
-      name: contact.Name,
-      position: contact.Position,
-      address: contact.Address,
-      phone: contact.Phone1,
-      mobile: contact.MobilePhone,
-      email: contact.E_Mail,
-      isActive: contact.Active === 'Y',
-    })),
+
+    // Direcciones detalladas
+    addresses:
+      raw.BPAddresses?.map(address => ({
+        name: address.AddressName,
+        street: address.Street,
+        block: address.Block || undefined,
+        city: address.City,
+        state: address.State || undefined,
+        country: address.Country,
+        zipCode: address.ZipCode || undefined,
+        type: address.AddressType,
+        businessPartnerCode: address.BPCode,
+        rowNumber: address.RowNum,
+        buildingFloorRoom: address.BuildingFloorRoom || undefined,
+        U_Municipio: address.U_Municipio || undefined,
+        U_CodDepartamento: address.U_CodDepartamento || undefined,
+        createdAt: {
+          date: address.CreateDate ? address.CreateDate.toString() : '',
+          time: address.CreateTime || '',
+        },
+      })) || [],
+
+    // Contactos
+    contacts:
+      raw.ContactEmployees?.map(contact => ({
+        name: contact.Name,
+        firstName: contact.FirstName || undefined,
+        lastName: contact.LastName || undefined,
+        position: contact.Position || undefined,
+        address: contact.Address || undefined,
+        phone: contact.Phone1 || undefined,
+        mobile: contact.MobilePhone || undefined,
+        email: contact.E_Mail || undefined,
+        isActive: contact.Active === 'tYES',
+        internalCode: contact.InternalCode,
+      })) || [],
   };
 };
 
-const mapFromSapBusinessPartner = (partner: SapBusinessPartner): SapBusinessPartnerRaw => {
+const mapFromSapBusinessPartner = (partner: SapBusinessPartner): Partial<SapBusinessPartnerRaw> => {
   return {
     CardCode: partner.code,
     CardName: partner.name,
-    CardType: partner.type,
+    CardType: partner.type as CardType,
     GroupCode: partner.groupCode,
-    Address: partner.address,
-    MailAddress: partner.mailAddress,
     Phone1: partner.phone,
     Cellular: partner.mobile,
     EmailAddress: partner.email,
-    FederalTaxID: partner.federalTaxId,
-    VatLiable: partner.vatLiable,
+    ContactPerson: partner.contactPerson,
+    Address: partner.address,
+    MailAddress: partner.mailAddress,
     City: partner.city,
-    Country: partner.country,
+    BillToState: partner.state,
+    Country: partner.country as Country,
+    ZipCode: partner.zipCode,
     Block: partner.block,
-    Currency: partner.currency,
-    CurrentAccountBalance: partner.currentBalance,
-    OpenDeliveryNotesBalance: partner.openDeliveryBalance,
-    OpenOrdersBalance: partner.openOrdersBalance,
-    BPAddresses: partner.addresses?.map(address => ({
-      AddressName: address.name,
-      Street: address.street,
-      Block: address.block,
-      City: address.city,
-      Country: address.country,
-      AddressType: address.type,
-      BPCode: address.businessPartnerCode,
-      RowNum: address.rowNumber,
-      CreateDate: address.createdAt.date,
-      CreateTime: address.createdAt.time,
-    })),
-    ContactEmployees: partner.contacts?.map(contact => ({
-      Name: contact.name,
-      Position: contact.position,
-      Address: contact.address,
-      Phone1: contact.phone,
-      MobilePhone: contact.mobile,
-      E_Mail: contact.email,
-      Active: contact.isActive ? 'Y' : 'N',
-    })),
+    FederalTaxID: partner.federalTaxId,
+    VatLiable: partner.vatLiable as VatLiable,
+    Currency: partner.currency as Currency,
+    CreditLimit: partner.creditLimit,
+    MaxCommitment: partner.maxCommitment,
+    DiscountPercent: partner.discountPercent,
+    PriceListNum: partner.priceList,
+    PayTermsGrpCode: partner.paymentTerms,
+    SalesPersonCode: partner.salesPersonCode,
+    BackOrder: partner.backOrder ? AcceptsEndorsedChecks.TYES : AcceptsEndorsedChecks.TNO,
+    PartialDelivery: partner.partialDelivery
+      ? AcceptsEndorsedChecks.TYES
+      : AcceptsEndorsedChecks.TNO,
+    Valid: partner.isActive ? AcceptsEndorsedChecks.TYES : AcceptsEndorsedChecks.TNO,
+    Frozen: partner.isFrozen ? AcceptsEndorsedChecks.TYES : AcceptsEndorsedChecks.TNO,
+
+    // Campos personalizados para Colombia
+    U_Ciudad_CC: null, // En SAP es null
+    U_Departamento_CC: null, // En SAP es null
+    U_BPCO_RTC: partner.U_BPCO_RTC as UBpcoRTC,
+    U_BPCO_TP: partner.U_BPCO_TP, // En SAP es string
+    U_OK1_AC_ECO: null, // En SAP es null
+
+    // No incluimos direcciones y contactos aquí porque normalmente
+    // se manejan con endpoints específicos en SAP B1
   };
 };
 
@@ -156,7 +218,10 @@ export const sapBusinessPartnerAdapter = {
     const sapBusinessPartner = mapFromSapBusinessPartner(businessPartner);
 
     const response = await axiosSapInstance.post(url, sapBusinessPartner, {
-      headers: { Cookie: cookies },
+      headers: {
+        Cookie: cookies,
+        'Content-Type': 'application/json',
+      },
       withCredentials: true,
     });
 
@@ -174,8 +239,11 @@ export const sapBusinessPartnerAdapter = {
 
     const sapBusinessPartner = mapFromSapBusinessPartner(businessPartner);
 
-    const response = await axiosSapInstance.put(url, sapBusinessPartner, {
-      headers: { Cookie: cookies },
+    const response = await axiosSapInstance.patch(url, sapBusinessPartner, {
+      headers: {
+        Cookie: cookies,
+        'Content-Type': 'application/json',
+      },
       withCredentials: true,
     });
 
