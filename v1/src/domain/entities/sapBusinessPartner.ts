@@ -23,7 +23,7 @@ export interface SapBusinessPartner {
   U_addInFaElectronica_email_contacto_FE: string | null;
   U_Celular: string | null;
 
-  Addresses: Array<{
+  addresses: Array<{
     AddressName: string | null;
     Street: string | null;
     Block: string | null;
