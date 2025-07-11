@@ -51,16 +51,41 @@ export const sapBusinessPartnerAdapter = {
     const url = `/BusinessPartners`;
 
     const sapBusinessPartner = mapFromSapBusinessPartner(businessPartner);
+    console.log(sapBusinessPartner);
 
-    const response = await axiosSapInstance.post(url, sapBusinessPartner, {
-      headers: {
-        Cookie: cookies,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    });
+    try {
+      const response = await axiosSapInstance.post(url, sapBusinessPartner, {
+        headers: {
+          Cookie: cookies,
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
 
-    return mapToSapBusinessPartner(response.data);
+      console.log('Respuesta exitosa:', response.data);
+      return mapToSapBusinessPartner(response.data);
+    } catch (error: any) {
+      if (error.response) {
+        // El servidor respondió con un código de estado fuera del rango 2xx
+        console.error('Error de SAP - Status:', error.response.status);
+        console.error('Error de SAP - Headers:', error.response.headers);
+        console.error('Error de SAP - Data:', JSON.stringify(error.response.data, null, 2));
+
+        // Si SAP devuelve un mensaje de error específico
+        if (error.response.data && error.response.data.error) {
+          console.error('Mensaje de error de SAP:', error.response.data.error.message);
+        }
+      } else if (error.request) {
+        // La solicitud se realizó pero no se recibió respuesta
+        console.error('No se recibió respuesta de SAP:', error.request);
+      } else {
+        // Error al configurar la solicitud
+        console.error('Error en la configuración de la solicitud:', error.message);
+      }
+
+      // Relanzar el error para que pueda ser manejado por el controlador
+      throw error;
+    }
   },
 
   async updateBusinessPartner(

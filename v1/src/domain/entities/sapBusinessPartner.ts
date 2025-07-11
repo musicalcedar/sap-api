@@ -39,14 +39,15 @@ export interface SapBusinessPartner {
     AddressName2: string | null;
     AddressName3: string | null;
     TypeOfAddress: string | null;
+    RowNum: number | null;
     BPCode: string;
     GlobalLocationNumber: string | null;
     Nationality: string | null;
     TaxOffice: string | null;
     GSTIN: string | null;
     GstType: string | null;
-    CreateDate: string | null;
-    CreateTime: string | null;
+    CreateDate?: string | null;
+    CreateTime?: string | null;
     MYFType: string | null;
     TaasEnabled: string | null;
     U_Municipio: string | null;
