@@ -25,7 +25,7 @@ import {
   UManejo,
   VatLiable,
 } from './types/sapBusinessPartnerRaw';
-
+import { getDepartmentCode, getMunicipalityCode } from './utils/locationDictionaries';
 export const mapToSapBusinessPartner = (raw: SapBusinessPartnerRaw): SapBusinessPartner => {
   return {
     code: raw.CardCode,

@@ -7,6 +7,7 @@ export interface SapBusinessPartner {
   federalTaxId: string; // se repite en U_Info_RUT
   city: string; // se repite en MailCity enn el array de BPAddresses en los campos City y U_BPCO_City
   email: string; // se repite en U_addInFaElectronica_email_contacto_FE
+  department?: string; // Nombre del departamento (ej: "ANTIOQUIA", "BOGOTA")
 
   // Campos personalizados para Colombia
   U_EsAutorret: string | null;
