@@ -76,7 +76,6 @@ export const sapController = {
     try {
       const session = req.cookies.session;
       const businessPartner = req.body;
-      console.log('body -->', businessPartner);
 
       const createBusinessPartnerUseCase = composeCreateBusinessPartnerUseCase();
       const result = await createBusinessPartnerUseCase(session, businessPartner);
