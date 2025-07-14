@@ -90,7 +90,6 @@ export const mapToSapBusinessPartner = (raw: SapBusinessPartnerRaw): SapBusiness
 export const mapFromSapBusinessPartner = (
   partner: SapBusinessPartner
 ): Partial<SapBusinessPartnerRaw> => {
-  console.log('Esto es lo que llega a mapFromSapBusinessPartner', partner);
   const result: Partial<SapBusinessPartnerRaw> = {
     CardCode: partner.code,
     CardName: partner.name,
@@ -107,7 +106,6 @@ export const mapFromSapBusinessPartner = (
     MailCity: partner.city,
     MailCountry: 'CO' as Country,
 
-    // Campos financieros y comerciales (hardcodeados)
     PayTermsGrpCode: -1,
     CreditLimit: 0.0,
     MaxCommitment: 0.0,
@@ -132,7 +130,6 @@ export const mapFromSapBusinessPartner = (
     CreditCardCode: -1,
     DebitorAccount: '13050501',
 
-    // Configuraciones booleanas (hardcodeadas)
     Valid: 'tYES' as boolResponse,
     Frozen: 'tNO' as boolResponse,
     Block: partner.addresses?.[0]?.Block || '',
@@ -191,7 +188,6 @@ export const mapFromSapBusinessPartner = (
     FCEAsPaymentMeans: 'tNO' as boolResponse,
     NotRelevantForMonthlyInvoice: 'tNO' as boolResponse,
 
-    // Campos personalizados para Colombia (variables)
     U_EsAutorret: partner.U_EsAutorret || 'N',
     U_BPCO_RTC: partner.U_BPCO_RTC || 'RS',
     U_BPCO_TDC: partner.U_BPCO_TDC || '11',
@@ -216,7 +212,6 @@ export const mapFromSapBusinessPartner = (
     U_CSS_AplAprobaciones: 'Y' as UCSSAPLAprobaciones,
     ElectronicProtocols: [],
 
-    // Direcciones (con valores booleanos hardcodeados)
     BPAddresses: Array.isArray(partner.addresses)
       ? partner.addresses.map((addr, index) => ({
           AddressName: addr.AddressName || 'PRINCIPAL',
