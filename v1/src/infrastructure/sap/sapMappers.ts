@@ -107,13 +107,15 @@ export const mapFromSapBusinessPartner = (
     MailCity: partner.city,
     MailCountry: 'CO' as Country,
 
+    // Campos financieros y comerciales (hardcodeados)
     PayTermsGrpCode: -1,
     CreditLimit: 0.0,
     MaxCommitment: 0.0,
     DiscountPercent: 0.0,
     VatLiable: 'vLiable' as VatLiable,
     DeductibleAtSource: 'tNO' as boolResponse,
-    DeductionPercent: 0.0,
+    DiscountBaseObject: 'dgboNone' as DiscountBaseObject,
+    DiscountRelations: 'dgrLowestDiscount' as DiscountRelations,
     PriceListNum: 4,
     IntrestRatePercent: 0.0,
     CommissionPercent: 0.0,
@@ -130,6 +132,7 @@ export const mapFromSapBusinessPartner = (
     CreditCardCode: -1,
     DebitorAccount: '13050501',
 
+    // Configuraciones booleanas (hardcodeadas)
     Valid: 'tYES' as boolResponse,
     Frozen: 'tNO' as boolResponse,
     Block: partner.addresses?.[0]?.Block || '',
@@ -156,8 +159,6 @@ export const mapFromSapBusinessPartner = (
     LanguageCode: 25,
     WithholdingTaxDeductionGroup: -1,
     TaxRoundingRule: 'trr_CompanyDefault' as TaxRoundingRule,
-    DiscountBaseObject: 'dgboNone' as DiscountBaseObject,
-    DiscountRelations: 'dgrLowestDiscount' as DiscountRelations,
     TypeReport: 'atCompany' as TypeReport,
     ThresholdOverlook: 'tNO' as boolResponse,
     SurchargeOverlook: 'tNO' as boolResponse,
@@ -190,6 +191,7 @@ export const mapFromSapBusinessPartner = (
     FCEAsPaymentMeans: 'tNO' as boolResponse,
     NotRelevantForMonthlyInvoice: 'tNO' as boolResponse,
 
+    // Campos personalizados para Colombia (variables)
     U_EsAutorret: partner.U_EsAutorret || 'N',
     U_BPCO_RTC: partner.U_BPCO_RTC || 'RS',
     U_BPCO_TDC: partner.U_BPCO_TDC || '11',
@@ -214,6 +216,7 @@ export const mapFromSapBusinessPartner = (
     U_CSS_AplAprobaciones: 'Y' as UCSSAPLAprobaciones,
     ElectronicProtocols: [],
 
+    // Direcciones (con valores booleanos hardcodeados)
     BPAddresses: Array.isArray(partner.addresses)
       ? partner.addresses.map((addr, index) => ({
           AddressName: addr.AddressName || 'PRINCIPAL',
@@ -241,7 +244,7 @@ export const mapFromSapBusinessPartner = (
           CreateDate: null,
           CreateTime: addr.CreateTime || '000000',
           MYFType: addr.MYFType || null,
-          TaasEnabled: addr.TaasEnabled || 'tYES',
+          TaasEnabled: 'tYES' as boolResponse, // Hardcodeado
           U_Municipio: addr.U_Municipio || '05088',
           U_CodDepartamento: addr.U_CodDepartamento || '05',
         }))
