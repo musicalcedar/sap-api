@@ -3,7 +3,7 @@ import https from 'https';
 import { config } from '../../config';
 
 const agent = new https.Agent({
-  rejectUnauthorized: false, // Solo para entornos de prueba/SAP con self-signed
+  rejectUnauthorized: false,
 });
 
 export const axiosSapInstance = axios.create({
