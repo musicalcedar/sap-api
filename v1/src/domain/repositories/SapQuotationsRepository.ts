@@ -1,5 +1,6 @@
 import { SapSession } from '../entities/sapSession';
 import { SapQuotation } from '../entities/sapQuotation';
+import { PaginatedResponse } from '../types/PaginatedResponse';
 
 export interface SapQuotationsRepository {
   getQuotations(
@@ -7,5 +8,5 @@ export interface SapQuotationsRepository {
     top: number,
     skip: number,
     filter?: string
-  ): Promise<SapQuotation[]>;
+  ): Promise<PaginatedResponse<SapQuotation>>;
 }

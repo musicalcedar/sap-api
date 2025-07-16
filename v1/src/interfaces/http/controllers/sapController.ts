@@ -48,11 +48,14 @@ export const sapController = {
       const filter = req.query.filter as string | undefined;
 
       const getBusinessPartnersUseCase = composeGetBusinessPartnersUseCase();
-      const businessPartners = await getBusinessPartnersUseCase(session, top, skip, filter);
+      const result = await getBusinessPartnersUseCase(session, top, skip, filter);
 
-      const mappedBusinessPartners = businessPartners.map(mapBusinessPartnerToDto);
+      const mappedBusinessPartners = result.items.map(mapBusinessPartnerToDto);
 
-      res.json(mappedBusinessPartners);
+      res.json({
+        data: mappedBusinessPartners,
+        pagination: result.pagination
+      });
     } catch (error) {
       next(error);
     }
@@ -97,11 +100,14 @@ export const sapController = {
       const filter = req.query.filter as string | undefined;
 
       const getQuotationsUseCase = composeGetQuotationsUseCase();
-      const quotations = await getQuotationsUseCase(session, top, skip, filter);
+      const result = await getQuotationsUseCase(session, top, skip, filter);
 
-      const mappedQuotations = quotations.map(mapQuotationToDto);
+      const mappedQuotations = result.items.map(mapQuotationToDto);
 
-      res.json(mappedQuotations);
+      res.json({
+        data: mappedQuotations,
+        pagination: result.pagination
+      });
     } catch (error) {
       next(error);
     }

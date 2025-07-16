@@ -4,6 +4,7 @@ import { SapSession } from '../../../domain/entities/sapSession';
 import { sapHttpService } from '../services/sapHttpService';
 import { mapToSapBusinessPartner, mapFromSapBusinessPartner } from '../sapMappers';
 import { SapBusinessPartnerRaw } from '../types/sapBusinessPartnerRaw';
+import { PaginatedResponse } from '../../../domain/types/PaginatedResponse';
 
 export const sapBusinessPartnerRepository: SapBusinessPartnerRepository = {
   async getBusinessPartners(
@@ -11,7 +12,7 @@ export const sapBusinessPartnerRepository: SapBusinessPartnerRepository = {
     top: number = 20,
     skip: number = 0,
     filter?: string
-  ): Promise<SapBusinessPartner[]> {
+  ): Promise<PaginatedResponse<SapBusinessPartner>> {
     let url = `/BusinessPartners?`;
 
     if (filter) {
@@ -20,8 +21,18 @@ export const sapBusinessPartnerRepository: SapBusinessPartnerRepository = {
       url += `$top=${top}&$skip=${skip}`;
     }
 
-    const response = await sapHttpService.get<{ value: SapBusinessPartnerRaw[] }>(session, url);
-    return response.value.map(mapToSapBusinessPartner);
+    const response = await sapHttpService.get<{ value: SapBusinessPartnerRaw[], '@odata.count'?: number }>(session, url);
+    const totalCount = response['@odata.count'] || response.value.length;
+    
+    return {
+      items: response.value.map(mapToSapBusinessPartner),
+      pagination: {
+        total: totalCount,
+        page: Math.floor(skip / top) + 1,
+        pageSize: top,
+        pages: Math.ceil(totalCount / top)
+      }
+    };
   },
 
   async getBusinessPartnerByCode(
