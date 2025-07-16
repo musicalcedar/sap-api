@@ -1,6 +1,5 @@
-import { SapBusinessPartner } from '@/domain/entities/sapBusinessPartner';
-import { SapSession } from '@/domain/entities/sapSession';
-import { SapBusinessPartnerRepository } from '@/domain/repositories/SapBusinessPartnerRepository';
+import { SapSession } from '../../../domain/entities/sapSession';
+import { SapBusinessPartnerRepository } from '../../../domain/repositories/SapBusinessPartnerRepository';
 
 export const getBusinessPartnerByCode = (
   session: SapSession,

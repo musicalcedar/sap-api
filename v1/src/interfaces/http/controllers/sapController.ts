@@ -5,9 +5,11 @@ import {
   composeGetBusinessPartnersUseCase,
   composeGetBusinessPartnerByCodeUseCase,
   composeCreateBusinessPartnerUseCase,
+  composeGetQuotationsUseCase,
 } from '../../../composition';
 import { mapItemToDto } from '../dto/SapItemResponseDto';
 import { mapBusinessPartnerToDto } from '../dto/SapBusinessPartnerResponseDto';
+import { mapQuotationToDto } from '../dto/SapQuotationResponseDto';
 
 export const sapController = {
   async loginSapSession(req: Request, res: Response, next: NextFunction) {
@@ -83,6 +85,23 @@ export const sapController = {
       const mappedBusinessPartner = mapBusinessPartnerToDto(result);
 
       res.status(201).json(mappedBusinessPartner);
+    } catch (error) {
+      next(error);
+    }
+  },
+  async getQuotations(req: Request, res: Response, next: NextFunction) {
+    try {
+      const session = req.cookies.session;
+      const top = Number(req.query.top) || 20;
+      const skip = Number(req.query.skip) || 0;
+      const filter = req.query.filter as string | undefined;
+
+      const getQuotationsUseCase = composeGetQuotationsUseCase();
+      const quotations = await getQuotationsUseCase(session, top, skip, filter);
+
+      const mappedQuotations = quotations.map(mapQuotationToDto);
+
+      res.json(mappedQuotations);
     } catch (error) {
       next(error);
     }

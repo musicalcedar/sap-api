@@ -1,3 +1,4 @@
+import { SapQuotation } from '@/domain/entities/sapQuotation';
 import { SapBusinessPartner } from '../../domain/entities/sapBusinessPartner';
 import {
   AddressType,
@@ -25,7 +26,9 @@ import {
   UManejo,
   VatLiable,
 } from './types/sapBusinessPartnerRaw';
+import { SapQuotationsRaw } from './types/sapQuotationsRaw';
 import { getDepartmentCode, getMunicipalityCode } from './utils/locationDictionaries';
+
 export const mapToSapBusinessPartner = (raw: SapBusinessPartnerRaw): SapBusinessPartner => {
   return {
     code: raw.CardCode,
@@ -248,4 +251,35 @@ export const mapFromSapBusinessPartner = (
       : [],
   };
   return result;
+};
+
+export const mapToSapQuotation = (raw: SapQuotationsRaw): SapQuotation => {
+  return {
+    docNum: raw.DocNum,
+    cardCode: raw.CardCode,
+    cardName: raw.CardName,
+    address: raw.Address,
+    address2: raw.Address2 || null,
+    docTotal: raw.DocTotal,
+    docCurrency: raw.DocCurrency,
+    docRate: raw.DocRate,
+    journalMemo: raw.JournalMemo || '',
+    salesPersonCode: raw.SalesPersonCode,
+    federalTaxId: raw.FederalTaxID || '',
+    discountPercent: raw.DiscountPercent,
+    documentLine:
+      raw.DocumentLines?.map(line => ({
+        docEntry: line.DocEntry,
+        docNum: raw.DocNum,
+        lineNum: line.LineNum,
+        itemCode: line.ItemCode,
+        itemDescription: line.ItemDescription,
+        quantity: line.Quantity,
+        price: line.Price,
+        lineTotal: line.LineTotal,
+        discountPercent: line.DiscountPercent,
+        priceAfterVat: line.PriceAfterVAT,
+        taxCode: line.TaxCode,
+      })) || [],
+  };
 };

@@ -2,8 +2,8 @@ import { sessionManager } from '../infrastructure/sap/sessionManager';
 import { sapAuthService } from '../infrastructure/sap/sapAuthService';
 import { config } from '../config';
 import { getBusinessPartners } from '../application/use-cases/sap/getBusinessPartnerUseCase';
-import { getBusinessPartnerByCode } from '../application/use-cases/sap/getBusinessPartnerByCode';
-import { createBusinessPartner } from '../application/use-cases/sap/createBusinessPartner';
+import { getBusinessPartnerByCode } from '../application/use-cases/sap/getBusinessPartnerByCodeUseCase';
+import { createBusinessPartner } from '../application/use-cases/sap/createBusinessPartnerUseCase';
 import { SapSession } from '../domain/entities/sapSession';
 import { SapBusinessPartner } from '../domain/entities/sapBusinessPartner';
 import { loginSapSession } from '../application/use-cases/sap/loginSapSessionUseCase';
@@ -11,7 +11,9 @@ import { getItems } from '../application/use-cases/sap/getItemsUseCase';
 import {
   composeSapBusinessPartnerRepository,
   composeSapItemRepository,
+  composeSapQuotationsRepository,
 } from '../infrastructure/sap/composition';
+import { getQuotations } from '../application/use-cases/sap/getQuotationsUseCase';
 
 export const composeLoginSapSessionUseCase = () => {
   return () => {
@@ -54,5 +56,12 @@ export const composeCreateBusinessPartnerUseCase = () => {
   return (session: SapSession, businessPartner: SapBusinessPartner) => {
     const sapBusinessPartnerRepository = composeSapBusinessPartnerRepository();
     return createBusinessPartner(session, businessPartner, sapBusinessPartnerRepository);
+  };
+};
+
+export const composeGetQuotationsUseCase = () => {
+  return (session: SapSession, top: number, skip: number, filter?: string) => {
+    const sapQuotationsRepository = composeSapQuotationsRepository();
+    return getQuotations(session, top, skip, filter, sapQuotationsRepository);
   };
 };

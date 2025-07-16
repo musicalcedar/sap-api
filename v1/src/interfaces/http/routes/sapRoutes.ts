@@ -11,4 +11,6 @@ router.get('/business-partner/:code', sapSessionValidator, sapController.getBusi
 router.get('/business-partner', sapSessionValidator, sapController.getBussinessPartner);
 router.post('/business-partner', sapSessionValidator, sapController.createBusinessPartner);
 
+router.get('/quotations', sapSessionValidator, sapController.getQuotations);
+
 export default router;
